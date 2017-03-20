@@ -25,7 +25,7 @@ History, Substitution, Navigation, Utilities, Redirection. PATH and CDPATH Omitt
 
 This guide is specifically written for my classmates at Epicodus. I started there a week ago (3/13/17) and it became clear that some supplementary material to the coursework would be appreciated.
 
-## #Assumed Knowledge
+### Assumed Knowledge
 
 (This page, essentially)[https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/introduction-to-the-command-line]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
 ```shell
@@ -48,7 +48,7 @@ Welcome to the command line. The shell, like git, is a tool that developers love
 
 Learning the shell has been a ten-year process for me, and I still do not consider myself truly expert. Here's hoping I can save some time for other people.
 
-## #What is a shell?
+### What is a shell?
 
 The shell is the thing that executes commands and spits text back at you. You generally use this through a terminal program like OSX's Terminal.app. In more general terms, the shell is an interpreter, which means that it's actually a complete programming language of its own. You'll also see the acronym "CLI" thrown around, that stands for "command line interface" as opposed to a "GUI" or "graphical user interface". Either way it's a way to talk to the computer in a fairly direct manner.
 
@@ -62,7 +62,7 @@ $ rm -rf / some/path/to/a/file
 ```
 This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX will not stop you from doing this. Be careful what you type. Test commands to see what they do (for example, with `:p`) before trying them for real. Most of the time the only risk you'll run is having to restore something from source control or backups, but of course that requires you to use those things. And of course the flip side of this is that if you ever do want to do something crazy like type eight characters and wipe the whole machine, you totally can. Just remember, with great power comes great responsibility. And yes, that's a line worth stealing :)
 
-## ## Bash vs zsh
+#### Bash vs zsh
 
 By default on most systems the shell interpreter is a program called Bash. This is basically due to inertia at this point: if you're a shell script writer and don't know in what sort of environment your code will run in, it's best to target Bash since it's the default. You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework (Prezto)[prezto]. This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
 
@@ -92,7 +92,7 @@ For a fuller discussion of the configuration files, see [Configuration].
 
 Bash actually doesn't have a lot of syntax. Pretty much things are commands, strings, or variables.
 
-## #Variables
+### Variables
 Variables are declared like so:
 ```shell
 $ FOO="some string"
@@ -110,7 +110,7 @@ some string
 
 And you think, variables, great! I'm a programmer, I use those all the time! Well, not in shell scripts you don't, because you're not developing code that way (hopefully). Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them.
 
-## #Strings
+### Strings
 
 There are several ways to write strings on the command line. Using single quotes:
 ```shell
