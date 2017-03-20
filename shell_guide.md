@@ -9,7 +9,8 @@ find and grep
 ^A, ^E, ^D, ^C, ^R
 ss
 
-
+$PAGER
+$EDITOR
 History, Substitution, Navigation, Utilities, Redirection. PATH and CDPATH Omitting variables and control structures.
 ==================
 
@@ -24,7 +25,11 @@ This guide is specifically written for my classmates at Epicodus. I started ther
 
 ###Assumed Knowledge
 
-(This page, essentially)[https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/introduction-to-the-command-line]. You should know what cd, ls, touch, mkdir, mv and rm do.
+(This page, essentially)[https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/introduction-to-the-command-line]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
+```shell
+$
+````
+to represent the shell.
 
 ##Summary of Content
 
@@ -53,7 +58,7 @@ But you make a small typo:
 ```shell
 $ rm -rf / some/path/to/a/file
 ```
-This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX will not stop you from doing this. Be careful what you type. Test commands to see what they do (for example, with `:p`) before trying them for real. Most of the time the only risk you'll run is having to restore something from source control or backups, but of course that requires you to use those things
+This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX will not stop you from doing this. Be careful what you type. Test commands to see what they do (for example, with `:p`) before trying them for real. Most of the time the only risk you'll run is having to restore something from source control or backups, but of course that requires you to use those things. And of course the flip side of this is that if you ever do want to do something crazy like type eight characters and wipe the whole machine, you totally can. Just remember, with great power comes great responsibility. And yes, that's a line worth stealing :)
 
 ####Bash vs zsh
 
@@ -65,15 +70,82 @@ Bash as a programming language is primitive and ugly as sin, but it will probabl
 
 You probably know that you can press the arrow keys up and down to go through commands you've entered before, but there are some other keyboard commands that do useful things. The way these are typically written is with a caret (^) substituting for the Control key (Windows) or Command key (Mac). There's a reason for that, but it's kinda arcane.
 
-The first one you should know is `^C` (ctrl+C). This stops whatever command is currently executing, unless you've locked the system up. If that happens you can probably still use the kill command.
+The first one you should know is `^C` (ctrl+C). This stops whatever command is currently executing, unless you've locked the system up. If that happens you can probably still use the `kill` command, but you may also contemplate the failures in life that have brought you that point, your worth as a human being, and the fate of your homework assignment before hitting that panic button.
+
+Usually holding CTRL/CMD and pressing right or left will scroll by word instead of by character. Here are a few more commands
+
+* `^D` : this technically means 'end of file' but you use it to get out of things. If you're using zsh but bash is your default shell, pressing this will get you out of zsh and back to bash. This is also what you use to close SSH connections.
+* `^A` : jumps to the beginning of the line. You use this when you forget something at the beginning of a command
+* `^E` : jumps to the end of the line.
+* `^P` and `^N` move backwards and forwards (respectively) in history.
+* `^L` : clears the screen
+* `^R` : searches your history backwards. This is amazing. My typical use case is when I try a command and it doesn't work, then I spend some time debugging why, then whenever I get done I don't want to hit up a bunch of times looking for that previous command. Hit ^G or escape to stop searching.
+
+You can also search forwards in history, but the default command for this (`^S`) is usually bound to something else. So in order to do that, you need to have the following in your `.bashrc` or `.zshrc` configuration file.
+`stty -ixon`
+
+For a fuller discussion of the configuration files, see [Configuration].
 
 ##Syntax (strings, variables)
 
+Bash actually doesn't have a lot of syntax. Pretty much things are commands, strings, or variables.
+
+###Variables
+Variables are declared like so:
+```shell
+$ FOO="some string"
+```
+and used like this:
+```shell
+$ echo $FOO
+some string
+```
+or
+```shell
+$ echo ${FOO}
+some string
+```
+
+And you think, variables, great! I'm a programmer, I use those all the time! Well, not in shell scripts you don't, because you're not developing code that way (hopefully). Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them.
+
+###Strings
+
+There are several ways to write strings on the command line. Using single quotes:
+```shell
+$ 'this is a string!'
+```
+Double quotes
+```shell
+$ "This is also a string"
+
+```
+Heredoc
+```shell
+$ <<EOM
+This is a multi-line string. It's closed by 'EOM' on a line by itself
+  EOM <-- this does not end the string!
+EOM
+```
+Strings enclosed in single quotes are evaluated literally (no interpolation or substitution is performed).
+```shell
+$ FOO='bar'
+$ echo 'This string has a $FOO'
+This string has a $FOO
+```
+Double quoted strings will do interpolation and/or substitution
 ##Redirection
 
 ##History
 
 ##Substitution
+
+##Environment Variables
+
+##Configuration
+
+##Cheat Sheet
+
+It is strongly recommended that you create your own. This will firm up memory associations.
 
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: url
