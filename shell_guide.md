@@ -135,7 +135,48 @@ $ echo 'This string has a $FOO'
 This string has a $FOO
 ```
 Double quoted strings will do interpolation and/or substitution
+```shell
+$ FOO='bar'
+$ echo "This string has a $FOO."
+This string has a bar.
+```
+Heredocs can be told to interpolate or not, and they can also optionally suppress tabs. Why tabs? Well, indentation is important in shell scripts too, and you don't necessarily want that indentation to show up in your output text. The string EOM (for End Of Message) is used by convention, but it can in fact be any character sequence. You are not going to use these very often, but they are really useful for creating other files within a script.
+```shell
+$ FOO='bar'
+$ cat <<EOM
+This is a multi-line string.
+It has a $FOO
+EOM
+This is a multi-line string.
+It has a bar
+```
+Add quotes around the delimiter to suppress interpolation for literal output.
+```shell
+$ cat <<'EOM'
+This is a multi-line string.
+It has a $FOO
+EOM
+This is a multi-line string
+It has a $FOO
+```
+Suppress tabs like so:
+```shell
+$ cat <<- EOM
+		This is a multi-line string.
+	It has a $FOO
+EOM
+This is a multi-line string
+It has a $FOO
+```
+The perspicacious programmer will notice that the other examples used echo, and for the heredocs we used cat. Technically heredocs are a form of output redirection, not strings per se, and echo is designed to work with real strings.
+
 ## Redirection
+
+This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities] section, but here's a quick example that I use all the time:
+```shell
+$ du -h ~ | sort -hr | head -n 20
+```
+The first part of the command lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results. More succinctly, the command gives the top twenty largest files or directories.
 
 ## History
 
@@ -144,6 +185,14 @@ Double quoted strings will do interpolation and/or substitution
 ## Environment Variables
 
 ## Configuration
+
+## Unix Utilities
+
+### Find
+
+### Grep
+
+### Tail
 
 ## Cheat Sheet
 
