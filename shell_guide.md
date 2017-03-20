@@ -150,4 +150,4 @@ Double quoted strings will do interpolation and/or substitution
 It is strongly recommended that you create your own. This will firm up memory associations.
 
 [prezto]: https://github.com/sorin-ionescu/prezto
-[prompt1]: url
+[prompt1]: prompt1.png
