@@ -176,17 +176,130 @@ This guy is called a pipe: `|`. It lets you chain commands together in very powe
 ```shell
 $ du -h ~ | sort -hr | head -n 20
 ```
-The first part of the command lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results. More succinctly, the command gives the top twenty largest files or directories.
+The first part of the command lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results. More succinctly, the command gives the top twenty largest files or directories. Pretty neat, huh?
+
+Each program that executes in the shell has an input stream, an output stream, and an error output stream. You should know that the error output exists, and you may eventually get into a situation where you have to learn how to something with it. However, there are some interesting things you can do with input and output of files.
+
+```shell
+$ find . -iname '*.css' > search_results.txt 
+```
+The above command finds all files in or underneath the current directory, and the `>` operator writes those to a file. With Bash, it will overwrite any existing content without asking questions. Zsh by default will let you know that the file exists already. You can force zsh to overwrite the file anyway with `>|` or `>!`. You won't use this terribly often, but if you're doing more complicated things than you can express with a single command it can be useful to store the intermediate output somewhere.
+
+In the same vein we have `>>` which appends information to a file. For example,
+```shell
+$ >>~/.gitconfig <<'EOM'
+[color]
+    ui = true
+[core]
+    autocrlf = input
+EOM
+```
+I'm liable to use this to add config information to the default `.atom` settings file but that may be the first time I've actually had cause to use this.
+
+The final bit of redirection that you can do is to take a file and slurp up the contents into command-line arguments with `<`, basically just reversing the operation of `>`.
+```shell
+$ grep 'class="red' < search_results.txt
+```
+
+You will probably use the pipe character daily, and everything else is more situational.
+
+#### Other Pipeline Elements
+
+So you want to run a bunch of commands on the same line, but you don't want to actually chain their output. You do that like this:
+```shell
+$ mkdir -p project/{img,css,js} && touch project/css/styles.css
+```
+The `&&` means, 'execute the next command if the previous one was successful'. If you do not care whether the commands succeed you can use `;` to separate statements on a single line.
+```shell
+$ rmdir project/font; rm index.html
+rmdir: failed to remove 'project/font': No such file or directory
+rm: remove regular empty file 'index.html'? y
+```
 
 ## History
 
+The shell provides some extremely powerful history commands which can basically prevent you from ever having to type anything twice. That's the good news. The bad news is that you need some basic knowledge of regular expressions for this.
+
+The shell keeps track of every command it executes, up to some configurable limit, usually 1000 by default. If you type `history` it will spit out all of the commands it knows about, with little numbers by them. Slightly more useful is `history 10` (bash) or `history -10` (zsh).
+![shell history][history]
+So there are a couple things you're likely to use all the time, and it's good to know that the rest of this stuff exists. I'm going to go throught the long form first because it will help you remember the shortcuts, and it may be useful.
+
+Firstly, you can redo any command by using its entry number from the history command as so:
+```shell
+$ !2205
+history.png  prompt1.png  shell_guide.md
+```
+You can also snag (e.g.) the fifth command back
+```shell
+$ !-5
+```
+But far more often you just want the last command you entered, or some piece of it. On Linux I forget to use `sudo` all the time, and usually after I get done facepalming I'll do
+```shell
+$ sudo !!
+```
+which repeats the entire previous command. You can also snag pieces of the previous command. You may recall that in regular expressions the caret (^) refers to the beginning of something (the line, usually) and the $ refers to the end. So you can type things like this:
+```shell
+$ touch abc def ghi
+$ echo !!:^
+abc
+```
+```shell
+$ touch abc def ghi
+$ echo !!:1
+def
+```
+```shell
+$ touch abc def ghi
+$ echo !!:$
+ghi
+```
+And all of that said, the thing that you will find most useful is the shortcut for `!!:$`, which is `!$`. You will very, very often be doing things like this:
+```shell
+$ mkdir ~/projects/ruby/new_project
+$ cd ~/projects/ruby/new_project
+```
+You can instead do
+```shell
+$ mkdir ~/projects/ruby/new_project
+$ cd !$
+```
+
+I use that one many times per day. There are other complicated things you can do if you want, e.g. the third and fifth arguments, or a range of arguments, but generally if I need something like that I'll just hit up and use the ctrl+arrow_key (which goes backwards by word instead of by character) and just make whatever changes on that line.
+
+#TODO check completeness
+
 ## Substitution
 
-## Environment Variables
-
-## Configuration
+Technically using something like `!$` is command substitution, but there a couple of things which deserve their own heading. The first is curly brace substitution, which is extremely useful.
+```shell
+$ mkdir -p projectname/{img,css,js,font} && touch projectname/{css/styles.css,js/scripts.js,index.html}
+```
+The first part of that expands to
+```shell
+$ mkdir -p projectname/img projectname/js projectname/css projectname/font
+```
+Other ways to use this:
+```shell
+$ mv file{,.backup}
+$ git diff {branch1, branch2}:/some/file
+$ ln -s /etc/nginx/sites-{available,enabled}/website.local
+```
+Another really useful thing is caret substitution, which just swaps one string for another in the previous command.
+```shell
+$ ls some_file
+-rw-rw-r-- 1 kai kai 0 Mar 20 16:50 some_file
+$ ^ls^rm
+rm: remove regular empty file 'some_file'? y
+```
+If you need to replace a string that occurs multiple times in the previous command you can do this:
+```shell
+$ touch spam spamspam spamspamspam spameggsausageandspam
+$ !!:gs/spam/meow/
+$ touch meow meowmeow meowmeowmeow meoweggsausageandmeow
 
 ## Unix Utilities
+
+### Less / More
 
 ### Find
 
@@ -194,9 +307,19 @@ The first part of the command lists all of the files in the home directory and t
 
 ### Tail
 
+## Environment Variables
+
+## Configuration
+
 ## Cheat Sheet
 
 It is strongly recommended that you create your own. This will firm up memory associations.
 
+## Problems with this Guide
+
+I use zsh on Linux, so I expect there to be some differences with e.g. keyboard commands on OSX. Please file an issue in the repository and I will update this accordingly. Editing suggestions for style and content should also be reported similarly.
+
+
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
+[history]: history.png
