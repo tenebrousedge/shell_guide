@@ -2,6 +2,7 @@
 # A Brief Introduction to the Shell
 *for Novice Developers*
 
+version 1.0.0
 ©2017 Patrick 'Kai' Leahy. Licensed CC0, but attribution would be polite.
 
 ## Intended Audience
@@ -360,22 +361,79 @@ If you learn `vim`, you will never need another text editor. If you want to lear
 My preferred editor is Sublime Text, but on the command line I like `nano`. Generally the only time I use this is when editing configuration files, but sometimes it's useful for doing quick editing on a staging server. I should probably get around to learning `vim` but it does take a little while to get productive with it. I suspect that the easiest way to learn is to simply use it exclusively for a week. However, if you want a stupid-simple editor for quick config file editing, `nano` is hard to beat. It very helpfully prints all its commands at the bottom of the screen, and it can be made to do [syntax highlighting](#nano) too.
 ## Environment Variables
 
-$PATH, $CDPATH, $EDITOR, $PAGER
+$PATH, $CDPATH, $EDITOR, $PAGER, $USER, $HOME
+There are a bunch of what are called "environment variables" that are either always set or that are very useful to set.
+
+### $PATH
+
+This is a critical part of how your shell works. This contains all the places that your shell will look to find executables.
+```shell
+$ echo $PATH
+/home/kai/.rbenv/shims:/home/kai/.rbenv/bin:/home/kai/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+```
+The format is paths separated by colons. The usual command to add to it is:
+```shell
+PATH=$PATH:/something new
+```
+That makes sure that you don't overwrite some important bit of it. If you happen to do that, you will suddenly lose access to lots of commands. On the other hand, you can drop your scripts into any folder listed in your `$PATH` and set them to executable (`chmod +x`) and they will be available on the command line for you to call like any other program.
+
+### $CDPATH
+
+This is not a critical part of how your shell works, but it's still super useful. If you have all your project folders in a particular place (~/Desktop, e.g.) you can set your $CDPATH to that folder and then cd to any subdirectory without worrying about where you are.
+```shell
+$ CDPATH=~/Desktop/
+$ ls ~/Desktop/
+project1 project2 projectmeow
+$ cd /etc/nginx/sites-available/
+$ cd projectmeow
+~/Desktop/projectmeow
+```
+
+### $USER, $HOME, $PWD, $OLDPWD
+
+These are set by the shell automatically and they can be kinda useful.
+
+* $USER : This is always equal to the current user's username
+* $HOME : This is the user's home directory. If you're writing scripts use this and not ~
+* $PWD : This is the current working directory
+* $OLDPWD : This is the previous working directory
+
+### $EDITOR
+
+This is used by various command-line tools, including git. If you want to edit your commit messages with atom, you can set
+```shell
+$ EDITOR='atom'
+```
+or in your `~/.bashrc` or `~/.zshrc` file
+```shell
+export EDITOR='atom'
+```
+On my system this is set to `nano` because it's pretty rare that this gets invoked on something where you want to have a more fully featured editor.
+
 ## Configuration
+
+### Dotfiles and *.rc files
+
+Many tools will read an rc file on startup. Most shells will read quite a number of files on startup. Not all of them will be relevant to your interests. There are some files that are read when you are using the shell interactively and some that are run for non-interactive shells (startup scripts, e.g.).
+
+The files you care about are `~/.bash_profile` and (far more often) `~/.bashrc` if you're using Bash. If you're using zsh then you care about `~/.zshrc`. This is where you will put your custom aliases, and set $EDITOR, add anything you need to your $PATH, set up a colorful prompt, and other such things. If you want to reload your configuration, the following lines are equivalent:
+```shell
+$ . ~/.zshrc
+$ source ~/.zshrc
+```
+
+You also have dotfiles which are configuration for various things. Those are the hidden files that begin with a period. 
+
 
 ### git
 
-`git` has a number of configuration options which you should set using `git --config` instead of writing to that file directly. It also has 'hooks', which are scripts it can run before or after you commit things.
+`git` has a number of configuration options which you should set using `git --config` instead of writing to `~/.gitconfig` directly. It also has 'hooks', which are scripts it can run before or after you commit things. Post-commit hooks might be useful for, e.g. pushing the commits automatically to one or more repositories. Pre-commit hooks are vitally important and will save you from many stupid mistakes. Yelp has a project called [pre-commit][precommit] that gives you lots of useful pre-commit options out of the box. 
 
-```shell
-LIST="puts\|debugger\|binding.pry\|alert(\|console.log(\|var_dump"
+You will want to do a syntax check for any css, javascript, ruby or java files that you add to a repository. You will want to trim trailing whitespace. You will want to check for debugging statements so that those don't get into production code. This guide will be updated at some point with more explicit instructions on how to do that.
 
-for file in $(git diff-index --name-only HEAD); do
-        if grep -w $LIST $file; then
-            echo $file." has one of the word you don't want to commit. Please remove it"
-    fi
-done
-```
+A full description of git's config options is somewhat out of scope for this guide.
+
+You will potentially want to add things to your `~/.gitignore` file. On OSX having `.DS_Store` in there is not really optional.
 
 ### nano
 
@@ -384,6 +442,25 @@ On Linux, `nano` comes with a bunch of syntax highlighting files in `/usr/share/
 include /usr/share/nano/*
 ```
 Those will do pretty well. For those using other systems, there's also a GitHub repo with [improved nano highlighting][nanocolor] that you may want to use.
+
+### mysql
+
+```shell
+[mysql]
+auto-rehash
+pager = less
+```
+Put that in `~/.my.cnf` and get tab completion for table names and paged output. For a better interactive mysql prompt, use `mycli`.
+
+### atom
+
+TODO: find something useful to put here.
+
+### ruby-related stuff
+
+TODO: find something useful to put here.
+Use `pry` instead of `irb`.
+
 ## Cheat Sheet
 
 It is strongly recommended that you create your own. This will firm up memory associations.
@@ -403,3 +480,4 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 [editorwars]: http://en.wikipedia.org/wiki/Editor%20wars
 [vimwon]: http://www.linux-magazine.com/Online/Blogs/Off-the-Beat-Bruce-Byfield-s-Blog/The-End-of-the-Editor-Wars
 [nanocolor]: https://github.com/scopatz/nanorc
+[precommit]: https://pre-commit.com
