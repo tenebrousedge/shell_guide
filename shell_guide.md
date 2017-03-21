@@ -361,7 +361,6 @@ If you learn `vim`, you will never need another text editor. If you want to lear
 My preferred editor is Sublime Text, but on the command line I like `nano`. Generally the only time I use this is when editing configuration files, but sometimes it's useful for doing quick editing on a staging server. I should probably get around to learning `vim` but it does take a little while to get productive with it. I suspect that the easiest way to learn is to simply use it exclusively for a week. However, if you want a stupid-simple editor for quick config file editing, `nano` is hard to beat. It very helpfully prints all its commands at the bottom of the screen, and it can be made to do [syntax highlighting](#nano) too.
 ## Environment Variables
 
-$PATH, $CDPATH, $EDITOR, $PAGER, $USER, $HOME
 There are a bunch of what are called "environment variables" that are either always set or that are very useful to set.
 
 ### $PATH
@@ -422,8 +421,7 @@ $ . ~/.zshrc
 $ source ~/.zshrc
 ```
 
-You also have dotfiles which are configuration for various things. Those are the hidden files that begin with a period. 
-
+You also have dotfiles which are configuration for various things. Those are the hidden files that begin with a period. Changing any of the config options is, well, optional, but you may want to do so. Generally it's a good idea to keep your dotfiles under source control (TODO: link to git dotfile instructions) but it's slightly trickier to get those set up on a new machine than your normal git repo, so if you do this, make a script that does these steps for you.
 
 ### git
 
@@ -460,6 +458,10 @@ TODO: find something useful to put here.
 
 TODO: find something useful to put here.
 Use `pry` instead of `irb`.
+
+## Epicodus Startup Scripts
+
+My next task after getting this online is writing a decent startup script. I do recommend forking zprezto in order to make your own modifications to the .zshrc files. I'll update this section as I get things done.
 
 ## Cheat Sheet
 
