@@ -1,23 +1,6 @@
-Writing Todo:
 
-==================
-
-! and history in general
-* and **
-?, ^, &&, |
-{,}      # examples diffing, ‘sudo ln -s /etc/nginx/sites-{available,enabled}/pk.local’
-find and grep
-ss
-
-$PAGER
-$EDITOR
-History, Substitution, Navigation, Utilities, Redirection. PATH and CDPATH Omitting variables and control structures.
-
-
-==================
-
-
-# A Brief Introduction to the Shell for Novice Developers
+# A Brief Introduction to the Shell
+*for Novice Developers*
 
 ©2017 Patrick 'Kai' Leahy. Licensed CC0, but attribution would be polite.
 
@@ -31,7 +14,7 @@ This guide is specifically written for my classmates at Epicodus. I started ther
 ```shell
 $
 ````
-to represent the shell.
+to represent the shell prompt. Probably this is obvious, but I may as well mention as it's a typical convention.
 
 ## Summary of Content
 
@@ -39,7 +22,7 @@ This guide will cover basic shell concepts and some recommendations for configur
 
 ## About the Author
 
-Hi, I'm Kai. I'm originally from rural Alaska, I've bounced around the States and spent four years or so in Central America. I really wanted to stay down there and so I talked my way into a programming job and taught myself what I needed to know as I went. That worked out more or less okay but in the six years since then I've been mostly stuck working on horrible legacy PHP projects, and Central America didn't turn out to be a good way to meet business contacts. Other than that I've used Linux exclusively for about ten years now, and messed around with Ruby to the tune of reading six or seven books and playing with rails and pry. I am currently attending Epicodus and I think that will be a necessary part of my skills development, but I'm also having a bit of an issue making rent so any sort of assistance, advice or job leads would help keep me housed.
+Hi, I'm Kai. I'm originally from rural Alaska, I've bounced around the States and spent four years or so in Central America. I really wanted to stay down there and so I talked my way into a programming job and taught myself what I needed to know as I went. That worked out more or less okay but in the six years since then I've been mostly stuck working on horrible legacy PHP projects, and Central America didn't turn out to be a good way to meet business contacts. Other than that I've used Linux exclusively for about ten years now, and messed around with Ruby to the tune of reading six or seven books and playing with rails and pry. I am currently attending Epicodus.
 
 ## Starting Out With the Shell
 
@@ -178,7 +161,7 @@ $ du -h ~ | sort -hr | head -n 20
 ```
 The first part of the command lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results. More succinctly, the command gives the top twenty largest files or directories. Pretty neat, huh?
 
-Each program that executes in the shell has an input stream, an output stream, and an error output stream. You should know that the error output exists, and you may eventually get into a situation where you have to learn how to something with it. However, there are some interesting things you can do with input and output of files.
+Each program that executes in the shell has an input stream, an output stream, and an error output stream, referred to as standard input (stdin), standard output (stdout), and standard error (stderr). There are cases where you care about this, which will be covered later. However, there are some interesting things you can do with file I/O redirection.
 
 ```shell
 $ find . -iname '*.css' > search_results.txt 
@@ -294,23 +277,113 @@ rm: remove regular empty file 'some_file'? y
 If you need to replace a string that occurs multiple times in the previous command you can do this:
 ```shell
 $ touch spam spamspam spamspamspam spameggsausageandspam
-$ !!:gs/spam/meow/
-$ touch meow meowmeow meowmeowmeow meoweggsausageandmeow
+$ !!:gs/spam/meow/:p
+touch meow meowmeow meowmeowmeow meoweggsausageandmeow
+```
+The :p bit at the end of the history command prints it instead of executing it.
 
 ## Unix Utilities
 
-### Less / More
+Almost all of the command line tools have a manual, unless it's something built in to the shell like `echo`. Type in (e.g.) `man find` and you will be inundated with information. If you're using something like `bower` which does not ship with a manpage, you should be able to get a quick usage guide by passing it the `--help` flag. If the tool is extremely badly behaved and does not respond to the `--help` flag, you can try `-h`. If none of that works throw away the tool and complain to the author.
 
-### Find
+The unix toolbox, comprising the shell and utilities, is ludicrously powerful, which probably has something to do with why you can get them on every major computing platform including (finally) Windows. I do not have a good handle on sed or awk. If someone wants to contribute a short description of the use of those tools, please submit a pull request.
 
-### Grep
+It should probably be mentioned that these tools were all written by different people and the flags and invocation tend to be somewhat idiosyncratic. `dd` is probably the best example of this. It's a tool you use to copy binary data in very specific ways, 
 
-### Tail
+### less
 
+This tool (called a pager) is for when you have a command that spits out ten zillion lines of text and you care about some part of it, or for when you want to just view a file really quickly. Hit 'h' for the help menu, and 'q' to quit.
+```shell
+$ brew search ruby | less
+```
+```
+$ less .gitignore
+```
+You can use `cat` to view short files, but anything longer than 40 lines is probably best viewed with `less`. It has some search abilities and other useful features. The one thing it's not great at is viewing files that are being updated continually (logfiles). For that use `tail -f`. Prezto has a neat feature where if you type `less` it will figure out how long the file is and if it's only one page it just dumps the text to the terminal.
+
+### find
+
+`find` is brilliant. The general form is:
+```shell
+$ find [location] [options]
+```
+
+You use this when you want to get a list of filenames in a subdirectory that match certain criteria, and especially when you want to do that and then do some sort of function to them. Usually I will use the case-insensitive name search and a glob (wildcard) operator (*).
+
+```shell
+$ find /etc -iname '*.ini'
+```
+It's good for things where you know some part of the filename but don't know where it might be. You can also use it to find files that have been modified within a certain timeframe, and you can limit how deep it searches too. Many uses of `find` can be avoided with zsh, which has a `**` operator which recursively matches subdirectories, so you can do things like
+
+```shell
+$ rm -i ~/**/*.class
+```
+Normally `find` is just used to list some files, but it also has an `-exec` option which is often a convenient way to apply a command to the matching files. Find uses `{}` to represent the file. Why? Hell if I know.
+```shell
+find . -type f -name "*.php" 2>/dev/null -exec php -l {} \; | grep -v 'No syntax errors'
+```
+This does a syntax check on all PHP files and prints the ones that don't pass. Inheriting a repository where the above command is necessary is not fun, by the way. I don't particularly remember why the `2>/dev/null` part was necessary, but for the record that's how you get rid of error streams you don't want. 
+
+#### Silencing Errors
+
+This deserves its own little subheader. The idea is that otherwise those errors are going to be passed as input to some other function that's probably expecting only a list of file names. `/dev/null` is a special file that discards all input to it, and the `2>` refers to the error stream. There is also a `/dev/zero`, `/dev/random`, and `/dev/urandom`, and these spit out zeros or random numbers until you tell them to stop. Mostly you need to know that these exist, and that you can do more complicated things with redirecting error and input streams if you really need to.
+
+### grep
+
+`grep` is just a text search function just like the ones in whichever graphical code editor you use, but the difference is that you get to use it with the rest of the unix toolchain. You can ask it to look for either literal text or (at least as often) a regular expression.
+
+```shell
+$ grep -r 'console.log' ./*
+```
+The above command will recursively search for the matching string in all files (here the idea is to remove debugging statements before committing). However, if I'm feeling slightly less lazy and want to be more specific about what files are searched:
+```shell
+$ grep 'console.log' ./**/*.js
+```
+A slightly contrived example to show chaining:
+```shell
+$ brew search ruby | grep rails | grep -v jquery | grep -v redis
+```
+That lists ruby packages that contain the string 'rails' but not 'jquery' or 'redis'. Doing that any other way sounds like a lot of work.  
+
+### tail and head
+
+`tail` is used mostly for snagging the last few lines of an error log file, but as that is an occupational hazard for programmers (like the shell itself!) then it's actually pretty useful just for that.
+```
+$ tail -n 30 /var/log/nginx/error.log
+```
+You can also use it to watch files as they are being generated, with `tail -f`. `tail` is also used to grab the last few lines of some command output, generally some sort of sorted data. `head` is the reverse command, grabbing the first few lines of a file or of some command output. It's less useful, but if all you use it for is [listing large files in a directory](#redirection) then it's still worth knowing.
+
+### Editors: vim, emacs, and nano
+
+If you learn `vim`, you will never need another text editor. If you want to learn `vim`, there is a learning game called "vim adventures" which should get you on the right path. So far I'm not that clever. vim is part of the POSIX specification and should be installed by default on any system with a unix-based shell (which since Microsoft created a Ubuntu subsystem is all of them). `emacs` deserves a mention; it used to be pretty much a 50/50 split between it and `vim`, but it [lost][vimwon] the [Editor Wars][editorwars]. Reasons to use it would be "I want a command line editor, but `vim` is too hard, and I like Lisp and wearing out the control keys on my keyboard".
+
+My preferred editor is Sublime Text, but on the command line I like `nano`. Generally the only time I use this is when editing configuration files, but sometimes it's useful for doing quick editing on a staging server. I should probably get around to learning `vim` but it does take a little while to get productive with it. I suspect that the easiest way to learn is to simply use it exclusively for a week. However, if you want a stupid-simple editor for quick config file editing, `nano` is hard to beat. It very helpfully prints all its commands at the bottom of the screen, and it can be made to do [syntax highlighting](#nano) too.
 ## Environment Variables
 
+$PATH, $CDPATH, $EDITOR, $PAGER
 ## Configuration
 
+### git
+
+`git` has a number of configuration options which you should set using `git --config` instead of writing to that file directly. It also has 'hooks', which are scripts it can run before or after you commit things.
+
+```shell
+LIST="puts\|debugger\|binding.pry\|alert(\|console.log(\|var_dump"
+
+for file in $(git diff-index --name-only HEAD); do
+        if grep -w $LIST $file; then
+            echo $file." has one of the word you don't want to commit. Please remove it"
+    fi
+done
+```
+
+### nano
+
+On Linux, `nano` comes with a bunch of syntax highlighting files in `/usr/share/nano`. Drop this into your '~/.nanorc' file:
+```shell
+include /usr/share/nano/*
+```
+Those will do pretty well. For those using other systems, there's also a GitHub repo with [improved nano highlighting][nanocolor] that you may want to use.
 ## Cheat Sheet
 
 It is strongly recommended that you create your own. This will firm up memory associations.
@@ -319,7 +392,14 @@ It is strongly recommended that you create your own. This will firm up memory as
 
 I use zsh on Linux, so I expect there to be some differences with e.g. keyboard commands on OSX. Please file an issue in the repository and I will update this accordingly. Editing suggestions for style and content should also be reported similarly.
 
+## Further Reading
+
+* [The Advanced Bash Scripting Guide](http://tldp.org/LDP/abs/html/)
+* [Zsh Documentation](http://zsh.sourceforge.net/Doc/)
 
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
 [history]: history.png
+[editorwars]: http://en.wikipedia.org/wiki/Editor%20wars
+[vimwon]: http://www.linux-magazine.com/Online/Blogs/Off-the-Beat-Bruce-Byfield-s-Blog/The-End-of-the-Editor-Wars
+[nanocolor]: https://github.com/scopatz/nanorc
