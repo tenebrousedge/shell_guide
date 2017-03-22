@@ -525,6 +525,7 @@ Recommended:
 * [Why's Poignant Guide to Ruby](http://poignant.guide/)
 * [Vim adventures][vim-adventures]
 
+[jwz]: http://regex.info/blog/2006-09-15/247
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
 [absg]: http://tldp.org/LDP/abs/html/
