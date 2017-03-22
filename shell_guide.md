@@ -303,7 +303,9 @@ Almost all of the command line tools have a manual, unless it's something built 
 
 The unix toolbox, comprising the shell and utilities, is ludicrously powerful, which probably has something to do with why you can get them on every major computing platform including (finally) Windows. I do not have a good handle on sed or awk. If someone wants to contribute a short description of the use of those tools, please submit a pull request.
 
-It should probably be mentioned that these tools were all written by different people and the flags and invocation tend to be somewhat idiosyncratic. `dd` is probably the best example of this. It's a tool you use to copy binary data in very specific ways, 
+It should probably be mentioned that these tools were all written by different people and the flags and invocation tend to be somewhat idiosyncratic. `dd` is probably the best example of this. It's a tool you use to copy binary data in very specific ways, but its syntax is like no other utility, because it was written for some obscure IBM system, and there's no point in changing the syntax of a tool that is in wide use already.
+
+It's not entirely the case that the shell is buggy and inconsistent. It's at least more inconsistent than buggy. All together though, it works pretty well.
 
 ### less
 
