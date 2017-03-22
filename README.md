@@ -2,7 +2,7 @@
 
 *for novice developers* 
 
-version 1.0.1
+version 1.0.2
 
 ©2017 Patrick 'Kai' Leahy. Licensed CC0, but attribution would be polite.
 
