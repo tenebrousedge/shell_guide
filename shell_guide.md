@@ -2,7 +2,7 @@
 # A Brief Introduction to the Shell
 *for Novice Developers*
 
-version 1.0.0
+version 1.0.1
 ©2017 Patrick 'Kai' Leahy. Licensed CC0, but attribution would be polite.
 
 ## Intended Audience
@@ -28,13 +28,15 @@ Hi, I'm Kai. I'm originally from rural Alaska, I've bounced around the States an
 ## Starting Out With the Shell
 
 ![Bash command prompt][prompt1]
-Welcome to the command line. The shell, like git, is a tool that developers love to hate. They both have complicated syntax and a tendency to punish errant keystrokes. However, they're useful enough that we put up with the rough edges, and the larger the codebase you're working with, the more important they become. It becomes clear pretty quickly that things like mkdir and touch are much faster than trying to create file and directory structures, but the rest of the shell doesn't exactly go out of its way to teach you what you can do with it, and the Advanced Bash Scripting Guide is not exactly light reading. This is also not light reading but should provide a practical introduction to most concepts and some example usage.
 
-Learning the shell has been a ten-year process for me, and I still do not consider myself truly expert. Here's hoping I can save some time for other people.
+Welcome to the command line. The shell, like git, is a tool that developers love to hate. They both have complicated syntax and a tendency to punish errant keystrokes. However, they're useful enough that we put up with the rough edges, and the larger the codebase you're working with, the more important they become. It becomes clear pretty quickly that things like mkdir and touch are much faster than trying to create file and directory structures, but the rest of the shell doesn't exactly go out of its way to teach you what you can do with it, and the [Advanced Bash Scripting Guide][absg] is not exactly light reading. This is also not light reading but should provide a practical introduction to most concepts and some example usage, specifically for someone who wants to be a developer and not a script writer.
+
+
+Learning the shell has been a ten-year process for me, and I'm not really an expert. This guide is the stuff I've learned and found useful.  It's definitely not all there is to know about this stuff.
 
 ### What is a shell?
 
-The shell is the thing that executes commands and spits text back at you. You generally use this through a terminal program like OSX's Terminal.app. In more general terms, the shell is an interpreter, which means that it's actually a complete programming language of its own. You'll also see the acronym "CLI" thrown around, that stands for "command line interface" as opposed to a "GUI" or "graphical user interface". Either way it's a way to talk to the computer in a fairly direct manner.
+The shell is the thing that executes commands and spits text back at you. You generally use this through a terminal program like OSX's Terminal.app. On Windows you might use cygwin or the new Ubuntu substystem. In more general terms, the shell is an command interpreter, which means that it's actually a complete programming language of its own. You'll also see the acronym "CLI" thrown around, that stands for "command line interface" as opposed to a "GUI" or "graphical user interface". Either way it's a way to talk to the computer in a fairly direct manner.
 
 That is a warning, by the way. The problem with programming is that the computer always does exactly what you tell it to. There is a mistake you can make which is worth explaining before we even get past the introduction. So you want to remove all the files and folders in some directory, and what you intended to type was this:
 ```shell
@@ -44,17 +46,27 @@ But you make a small typo:
 ```shell
 $ rm -rf / some/path/to/a/file
 ```
-This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX will not stop you from doing this. Be careful what you type. Test commands to see what they do (for example, with `:p`) before trying them for real. Most of the time the only risk you'll run is having to restore something from source control or backups, but of course that requires you to use those things. And of course the flip side of this is that if you ever do want to do something crazy like type eight characters and wipe the whole machine, you totally can. Just remember, with great power comes great responsibility. And yes, that's a line worth stealing :)
+This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX at least will not stop you from doing this. **Be careful what you type**. Test commands to see what they do (for example, with `:p`) before trying them for real. Most of the time the only risk you'll run is having to restore something from source control or backups, but of course that requires you to use those things. And of course the flip side of this is that if you ever do want to do something crazy like type eight characters and wipe the whole machine, you totally can. Just remember, with great power comes great responsibility. And yes, that's a line worth stealing ☺
+
+### Why learn this?
+
+Programming is fundamentally a way to save human labor, and that includes our own labor. Learning to use the shell effectively will save you labor as a programmer, and the returns on that investment are exponential. The more time you can spend **thinking** instead of **typing**, the more you can express in code, and the more you can express in code, the more you can change the world.
 
 #### Bash vs zsh
 
-By default on most systems the shell interpreter is a program called Bash. This is basically due to inertia at this point: if you're a shell script writer and don't know in what sort of environment your code will run in, it's best to target Bash since it's the default. You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework [Prezto](prezto). This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
+By default on most systems the shell interpreter is a program called Bash. This is basically due to inertia at this point: if you're a shell script writer and don't know in what sort of environment your code will run in, it's best to target Bash since it's the default on basically all systems. You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework [Prezto](prezto). This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
+
+##### Note to Epicodus Students
+To start using `zsh`, you can type `zsh` into any terminal.
+=========
+
+#### Bash Bashing
 
 Bash as a programming language is primitive and ugly as sin, but it will probably run on any Unix-based system without modification. If you really need to be sure of the broadest possible compatibility, there's an even more primitive version of Bash called POSIX, of which you need to know only that it exists and that if you have to worry about what exactly it is you should probably seek another solution.
 
 ## Navigation
 
-You probably know that you can press the arrow keys up and down to go through commands you've entered before, but there are some other keyboard commands that do useful things. The way these are typically written is with a caret (^) substituting for the Control key (Windows) or Command key (Mac). There's a reason for that, but it's kinda arcane.
+You probably know that you can press the arrow keys up and down to go through commands you've entered before, but there are some other keyboard commands that do useful things. The way these are typically written is with a caret (^) substituting for the Control key (Windows) or Command key (Mac). There's a reason for that, but it's kinda [arcane][caretascii].
 
 The first one you should know is `^C` (ctrl+C). This stops whatever command is currently executing, unless you've locked the system up. If that happens you can probably still use the `kill` command, but you may also contemplate the failures in life that have brought you that point, your worth as a human being, and the fate of your homework assignment before hitting that panic button.
 
@@ -67,10 +79,12 @@ Usually holding CTRL/CMD and pressing right or left will scroll by word instead 
 * `^L` : clears the screen
 * `^R` : searches your history backwards. This is amazing. My typical use case is when I try a command and it doesn't work, then I spend some time debugging why, then whenever I get done I don't want to hit up a bunch of times looking for that previous command. Hit ^G or escape to stop searching.
 
-You can also search forwards in history, but the default command for this (`^S`) is usually bound to something else. So in order to do that, you need to have the following in your `.bashrc` or `.zshrc` configuration file.
-`stty -ixon`
+You can also search forwards in history, but the default command for this (`^S`) is usually bound to something else. So in order to do that, you need to have the following in your `.bashrc` or `.zshrc` configuration file:
+```shell
+stty -ixon
+```
 
-For a fuller discussion of the configuration files, see [Configuration].
+For a fuller discussion of the configuration files, see [Configuration][#Configuration].
 
 ## Syntax (strings, variables)
 
@@ -92,7 +106,7 @@ $ echo ${FOO}
 some string
 ```
 
-And you think, variables, great! I'm a programmer, I use those all the time! Well, not in shell scripts you don't, because you're not developing code that way (hopefully). Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them.
+And you might think, "variables, great! I'm a programmer, I use those all the time!" Well, not in shell scripts you don't, because you're not developing code that way (hopefully). Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them. Do set some [environment variables][#environment-variables] though.
 
 ### Strings
 
@@ -156,20 +170,24 @@ The perspicacious programmer will notice that the other examples used echo, and 
 
 ## Redirection
 
-This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities] section, but here's a quick example that I use all the time:
+This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities][#unix-utilities] section, but here's a quick example that I use all the time:
 ```shell
 $ du -h ~ | sort -hr | head -n 20
 ```
 The first part of the command lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results. More succinctly, the command gives the top twenty largest files or directories. Pretty neat, huh?
 
-Each program that executes in the shell has an input stream, an output stream, and an error output stream, referred to as standard input (stdin), standard output (stdout), and standard error (stderr). There are cases where you care about this, which will be covered later. However, there are some interesting things you can do with file I/O redirection.
+Each program that executes in the shell has an input stream, an output stream, and an error output stream, referred to as standard input (`stdin`), standard output (`stdout`), and standard error (`stderr`). There are cases where you care about this, which will be covered later. However, there are some interesting things you can do with file I/O redirection.
 
 ```shell
 $ find . -iname '*.css' > search_results.txt 
 ```
-The above command finds all files in or underneath the current directory, and the `>` operator writes those to a file. With Bash, it will overwrite any existing content without asking questions. Zsh by default will let you know that the file exists already. You can force zsh to overwrite the file anyway with `>|` or `>!`. You won't use this terribly often, but if you're doing more complicated things than you can express with a single command it can be useful to store the intermediate output somewhere.
+The syntax is:
+```shell
+$ some_command > some_filename
+```
+The example command finds all files in or underneath the current directory, and the `>` operator writes those to a file. With Bash, `>` will overwrite any existing content without asking questions. Zsh by default will let you know that the file exists already. You can force zsh to overwrite the file anyway with `>|` or `>!`. If you get a good handle on pipelining, you won't use this terribly often, but if you're doing more complicated things than you can express with a single command it can be useful to store the intermediate output somewhere.
 
-In the same vein we have `>>` which appends information to a file. For example,
+In the same sort of vein we have `>>` which appends information to a file. For example,
 ```shell
 $ >>~/.gitconfig <<'EOM'
 [color]
@@ -178,7 +196,7 @@ $ >>~/.gitconfig <<'EOM'
     autocrlf = input
 EOM
 ```
-I'm liable to use this to add config information to the default `.atom` settings file but that may be the first time I've actually had cause to use this.
+I'm liable to use this to add config information to the default `.atom` settings file but that may be the first time I've actually had cause to use this. If you are trying to log something using a shell script you might also find a need for this, but if you're going to log something you may as well use a nicer language to do that with.
 
 The final bit of redirection that you can do is to take a file and slurp up the contents into command-line arguments with `<`, basically just reversing the operation of `>`.
 ```shell
@@ -249,8 +267,6 @@ $ cd !$
 ```
 
 I use that one many times per day. There are other complicated things you can do if you want, e.g. the third and fifth arguments, or a range of arguments, but generally if I need something like that I'll just hit up and use the ctrl+arrow_key (which goes backwards by word instead of by character) and just make whatever changes on that line.
-
-#TODO check completeness
 
 ## Substitution
 
@@ -353,6 +369,18 @@ That lists ruby packages that contain the string 'rails' but not 'jquery' or 're
 $ tail -n 30 /var/log/nginx/error.log
 ```
 You can also use it to watch files as they are being generated, with `tail -f`. `tail` is also used to grab the last few lines of some command output, generally some sort of sorted data. `head` is the reverse command, grabbing the first few lines of a file or of some command output. It's less useful, but if all you use it for is [listing large files in a directory](#redirection) then it's still worth knowing.
+
+### top and kill
+
+`top` is a process monitor that lists things in order of CPU usage by default. It can kill things too if you press 'k'. It will ask you what you want, and default to the highest-cpu-utilizing process. But if you have used the amazing power of your terminal to really lock up the system, your panic button is:
+```shell
+$ kill -9 $(pgrep chrome)
+```
+If you happen to know the process id you can give that to kill:
+```shell
+$ kill -9 1233
+```
+`kill -9` is an extremely rude way to end a process, and the process might be rude back. If your system is locked up and it's something less than a critical emergency, use your smartphone to google the things you should do before using that particular number.
 
 ### Editors: vim, emacs, and nano
 
@@ -473,13 +501,14 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 
 ## Further Reading
 
-* [The Advanced Bash Scripting Guide](http://tldp.org/LDP/abs/html/)
+* [The Advanced Bash Scripting Guide][absg]
 * [Zsh Documentation](http://zsh.sourceforge.net/Doc/)
 
-[epicodus-shell]: https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/introduction-to-the-command-line
-[jwz]: http://regex.info/blog/2006-09-15/247
+(??)
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
+[absg]: http://tldp.org/LDP/abs/html/
+[caretascii]: https://en.wikipedia.org/wiki/Caret_notation
 [history]: history.png
 [editorwars]: http://en.wikipedia.org/wiki/Editor%20wars
 [vimwon]: http://www.linux-magazine.com/Online/Blogs/Off-the-Beat-Bruce-Byfield-s-Blog/The-End-of-the-Editor-Wars

@@ -1,7 +1,7 @@
 #A Brief Introduction to the Shell
 *for novice developers* 
 
-version 1.0.0
+version 1.0.1
 
 ©2017 Patrick 'Kai' Leahy. Licensed CC0, but attribution would be polite.
 
