@@ -502,7 +502,6 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 * [The Advanced Bash Scripting Guide][absg]
 * [Zsh Documentation](http://zsh.sourceforge.net/Doc/)
 
-(??)
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
 [absg]: http://tldp.org/LDP/abs/html/
