@@ -382,9 +382,22 @@ $ kill -9 1233
 
 ### Editors: vim, emacs, and nano
 
-If you learn `vim`, you will never need another text editor. If you want to learn `vim`, there is a learning game called "vim adventures" which should get you on the right path. So far I'm not that clever. vim is part of the POSIX specification and should be installed by default on any system with a unix-based shell (which since Microsoft created a Ubuntu subsystem is all of them). `emacs` deserves a mention; it used to be pretty much a 50/50 split between it and `vim`, but it [lost][vimwon] the [Editor Wars][editorwars]. Reasons to use it would be "I want a command line editor, but `vim` is too hard, and I like Lisp and wearing out the control keys on my keyboard".
+If you learn `vim`, you will never need another text editor. If you want to learn `vim`, there is a learning game called ["vim adventures"][vim-adventures] which should get you on the right path. So far I'm not that clever. vim is part of the POSIX specification and should be installed by default on any system with a unix-based shell (which since Microsoft created a Ubuntu subsystem is all of them). `emacs` deserves a mention; it used to be pretty much a 50/50 split between it and `vim`, but it [lost][vimwon] the [Editor Wars][editorwars]. Reasons to use it would be "I want a command line editor, but `vim` is too hard, and I like Lisp and wearing out the control keys on my keyboard".
 
 My preferred editor is Sublime Text, but on the command line I like `nano`. Generally the only time I use this is when editing configuration files, but sometimes it's useful for doing quick editing on a staging server. I should probably get around to learning `vim` but it does take a little while to get productive with it. I suspect that the easiest way to learn is to simply use it exclusively for a week. However, if you want a stupid-simple editor for quick config file editing, `nano` is hard to beat. It very helpfully prints all its commands at the bottom of the screen, and it can be made to do [syntax highlighting](#nano) too.
+
+### ssh
+
+`ssh` gives you secure command-line access to some other system. If you're getting tired of typing your GitHub username and password into the CLI every time you want to push some code, congratulations! There's a better way. Unfortunately for my fellow classmates, we don't get to use this. Which is to say, if you want to generate a new keypair every day, uploading it to GitHub and deleting the old one, knock yourself out. However, since most people will not do this, this section is going to be something less than a full explanation.
+
+Most often with `ssh` you will be opening a shell on another system, and you may or may not take the time to get your aliases and such set up there. However, if you already know what you want:
+```shell
+$ ssh hostname 'ls -lha ~'
+$ ssh hostname 'pg_dump -u user some_database' > database_dump.sql
+```
+
+You can also use `ssh` to set up proxies and tunnels, but you probably won't. Do practice good infosec with this tool. Your private keys need to be protected. Never create a private key without a passphrase. Never re-use a key: create one for each site that you want to access, for each machine you access that site with. `ssh-agent` will let you get away with only typing the passphrase for your keys once per session.
+
 ## Environment Variables
 
 There are a bunch of what are called "environment variables" that are either always set or that are very useful to set.
@@ -447,7 +460,7 @@ $ . ~/.zshrc
 $ source ~/.zshrc
 ```
 
-You also have dotfiles which are configuration for various things. Those are the hidden files that begin with a period. Changing any of the config options is, well, optional, but you may want to do so. Generally it's a good idea to keep your dotfiles under source control (TODO: link to git dotfile instructions) but it's slightly trickier to get those set up on a new machine than your normal git repo, so if you do this, make a script that does these steps for you.
+You also have dotfiles which are configuration for various things. Those are the hidden files that begin with a period. Changing any of the config options is, well, optional, but you may want to do so. Generally it's a good idea to [keep your dotfiles under source control][git-dotfile] but it's slightly trickier to get those set up on a new machine than your normal git repo, so if you do this, make a script that does these steps for you.
 
 ### git
 
@@ -483,7 +496,8 @@ TODO: find something useful to put here.
 ### ruby-related stuff
 
 TODO: find something useful to put here.
-Use `pry` instead of `irb`.
+Use `pry` instead of `irb`. [It's much nicer][pry-repl].
+> Epicodeans: pry is available on all the computers already and it's a fun way to explore Ruby. To run it, just type `pry`. Then try `ls 5`.
 
 ## Epicodus Startup Scripts
 
@@ -501,6 +515,15 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 
 * [The Advanced Bash Scripting Guide][absg]
 * [Zsh Documentation](http://zsh.sourceforge.net/Doc/)
+* [History of Character Encodings](http://tronweb.super-nova.co.jp/characcodehist.html)
+* [Why Ctrl-D exits the shell](http://unix.stackexchange.com/questions/110240/why-does-ctrl-d-eof-exit-the-shell)
+
+Recommended:
+
+* [Slashdot](https://slashdot.org)
+* [Hacker News](https://news.ycombinator.com)
+* [Why's Poignant Guide to Ruby](http://poignant.guide/)
+* [Vim adventures][vim-adventures]
 
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
@@ -511,3 +534,6 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 [vimwon]: http://www.linux-magazine.com/Online/Blogs/Off-the-Beat-Bruce-Byfield-s-Blog/The-End-of-the-Editor-Wars
 [nanocolor]: https://github.com/scopatz/nanorc
 [precommit]: https://pre-commit.com
+[git-dotfile]: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
+[pry-repl]: http://pryrepl.org/
+[vim-adventures]: https://vim-adventures.com/
