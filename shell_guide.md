@@ -11,7 +11,7 @@ This guide is specifically written for my classmates at Epicodus. I started ther
 
 ### Assumed Knowledge
 
-(This page, essentially)[https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/introduction-to-the-command-line]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
+[This page, essentially][epicodus-shell]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
 ```shell
 $
 ````
@@ -19,7 +19,7 @@ to represent the shell prompt. Probably this is obvious, but I may as well menti
 
 ## Summary of Content
 
-This guide will cover basic shell concepts and some recommendations for configuration. It will not cover scripting concerns or programming concepts such as loops and other control structures, and it will not cover variable/string manipulation. Those are extremely powerful features but if there's any truth to the (classic quip by jwz)[http://regex.info/blog/2006-09-15/247] about the challenges of regular expressions, that goes double for Bash. This guide will also omit a full description of regular expressions.
+This guide will cover basic shell concepts and some recommendations for configuration. It will not cover scripting concerns or programming concepts such as loops and other control structures, and it will not cover variable/string manipulation. Those are extremely powerful features but if there's any truth to the [classic quip by jwz][jwz] about the challenges of regular expressions, that goes double for Bash. This guide will also omit a full description of regular expressions.
 
 ## About the Author
 
@@ -476,6 +476,8 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 * [The Advanced Bash Scripting Guide](http://tldp.org/LDP/abs/html/)
 * [Zsh Documentation](http://zsh.sourceforge.net/Doc/)
 
+[epicodus-shell]: https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/introduction-to-the-command-line
+[jwz]: http://regex.info/blog/2006-09-15/247
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
 [history]: history.png
