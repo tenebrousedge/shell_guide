@@ -1,10 +1,3 @@
----  
-title: A Brief Introduction to the Shell  
-author: Patrick 'Kai' Leahy
-date: March 21, 2017
----  
-
-
 # A Brief Introduction to the Shell
 *for Novice Developers*
 
@@ -62,9 +55,8 @@ Programming is fundamentally a way to save human labor, and that includes our ow
 
 By default on most systems the shell interpreter is a program called Bash. This is basically due to inertia at this point: if you're a shell script writer and don't know in what sort of environment your code will run in, it's best to target Bash since it's the default on basically all systems. You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework [Prezto](prezto). This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
 
-##### Note to Epicodus Students
-To start using `zsh`, you can type `zsh` into any terminal.
-=========
+> ####Note to Epicodus Students
+> To start using `zsh`, you can type `zsh` into any terminal.
 
 #### Bash Bashing
 
