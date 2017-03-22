@@ -82,9 +82,9 @@ You can also search forwards in history, but the default command for this (`^S`)
 stty -ixon
 ```
 
-For a fuller discussion of the configuration files, see [Configuration][#Configuration].
+For a fuller discussion of the configuration files, see [Configuration](#configuration).
 
-## Syntax (strings, variables)
+## Syntax
 
 Bash actually doesn't have a lot of syntax. Pretty much things are commands, strings, or variables.
 
@@ -104,7 +104,7 @@ $ echo ${FOO}
 some string
 ```
 
-And you might think, "variables, great! I'm a programmer, I use those all the time!" Well, not in shell scripts you don't, because you're not developing code that way (hopefully). Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them. Do set some [environment variables][#environment-variables] though.
+And you might think, "variables, great! I'm a programmer, I use those all the time!" Well, not in shell scripts you don't, because you're not developing code that way (hopefully). Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them. Do set some [environment variables](#environment-variables) though.
 
 ### Strings
 
@@ -168,7 +168,7 @@ The perspicacious programmer will notice that the other examples used echo, and 
 
 ## Redirection
 
-This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities][#unix-utilities] section, but here's a quick example that I use all the time:
+This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities](#unix-utilities) section, but here's a quick example that I use all the time:
 ```shell
 $ du -h ~ | sort -hr | head -n 20
 ```
