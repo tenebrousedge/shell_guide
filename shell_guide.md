@@ -6,11 +6,11 @@ version 1.0.1
 
 ## Intended Audience
 
-This guide is specifically written for my classmates at Epicodus. I started there a week ago (3/13/17) and it became clear that some supplementary material to the coursework would be appreciated.
+This guide is specifically written for my classmates at Epicodus. 
 
 ### Assumed Knowledge
 
-[This page, essentially][epicodus-shell]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
+[This page, essentially](epicodus-shell). You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
 ```shell
 $
 ````
