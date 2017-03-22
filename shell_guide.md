@@ -1,3 +1,9 @@
+---  
+title: A Brief Introduction to the Shell  
+author: Patrick 'Kai' Leahy
+date: March 21, 2017
+---  
+
 
 # A Brief Introduction to the Shell
 *for Novice Developers*
