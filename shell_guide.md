@@ -10,7 +10,7 @@ This guide is specifically written for my classmates at Epicodus.
 
 ### Assumed Knowledge
 
-[This page, essentially](epicodus-shell). You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
+[This page, essentially][epicodus-shell]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
 ```shell
 $
 ````
@@ -526,7 +526,7 @@ $ source ~/.zshrc
 ```
 
 You also have dotfiles which are configuration for various things. Those are the hidden files that begin with a period. Changing any of the config options is, well, optional, but you may want to do so.
-Generally it's a good idea to [keep your dotfiles under source control][git-dotfile] but it's slightly trickier to get those set up on a new machine than your normal git repo, so if you do this, make a script that does these steps for you. ##NOTE: got a script/link/etc?##
+Generally it's a good idea to [keep your dotfiles under source control][git-dotfile] but it's slightly trickier to get those set up on a new machine than your normal git repo, so if you do this, make a script that does these steps for you.
 
 ### git
 
@@ -541,9 +541,9 @@ You will want to trim trailing whitespace.
 You will want to check for debugging statements so that those don't get into production code.
 This guide will be updated at some point with more explicit instructions on how to do that.
 
-A full description of git's config options is somewhat out of scope for this guide. ##NOTE: https://git-scm.com/docs/git-config##
+A full description of git's config options is somewhat out of scope for this guide. Check [here][git-config] for more info.
 
-You will potentially want to add things to your `~/.gitignore` file. On OSX having `.DS_Store` in there is not really optional. ##NOTE: defaults: https://github.com/github/gitignore ##
+You will potentially want to add things to your `~/.gitignore` file. On OSX having `.DS_Store` in there is not really optional.
 
 ### nano
 
@@ -599,6 +599,7 @@ Recommended:
 * [Why's Poignant Guide to Ruby](http://poignant.guide/)
 * [Vim adventures][vim-adventures]
 
+[epicodus-shell]: https://www.learnhowtoprogram.com/intro-to-programming/getting-started-with-intro-to-programming/interacting-with-the-command-line
 [jwz]: http://regex.info/blog/2006-09-15/247
 [prezto]: https://github.com/sorin-ionescu/prezto
 [prompt1]: prompt1.png
@@ -610,6 +611,7 @@ Recommended:
 [nanocolor]: https://github.com/scopatz/nanorc
 [precommit]: https://pre-commit.com
 [git-dotfile]: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
+[git-config]:  https://git-scm.com/docs/git-config
 [pry-repl]: http://pryrepl.org/
 [vim-adventures]: https://vim-adventures.com/
 [cc0]: https://wiki.creativecommons.org/wiki/CC0
