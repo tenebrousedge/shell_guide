@@ -1,5 +1,4 @@
 # A Brief Introduction to the Shell
-*for Novice Developers*
 
 version 1.0.2
 ©2017 Patrick 'Kai' Leahy. Licensed [CC0][cc0], but attribution would be polite.
@@ -13,7 +12,7 @@ This guide is specifically written for my classmates at Epicodus.
 [This page, essentially][epicodus-shell]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
 ```shell
 $
-````
+```
 to represent the shell prompt. This is a typical convention. Your shell prompt will generally look more like:
 
 ```shell
@@ -36,11 +35,11 @@ Hi, I'm Kai. I'm originally from rural Alaska, I've bounced around the States an
 ![Bash command prompt][prompt1]
 
 Welcome to the command line. The shell, like git, is a tool that developers love to hate. They both have complicated syntax and a tendency to punish errant keystrokes.
-However, they're useful enough that we put up with the rough edges, and the larger the codebase you're working with, the more important they become. It becomes clear pretty quickly that things like mkdir and touch are much faster than trying to create file and directory structures, but the rest of the shell doesn't exactly go out of its way to teach you what you can do with it, and the [Advanced Bash Scripting Guide][absg] is not exactly light reading.
+However, they're useful enough that we put up with the rough edges, and the larger the codebase you're working with, the more important they become. It becomes clear pretty quickly that things like `mkdir` and `touch` are much faster than trying to create file and directory structures, but the rest of the shell doesn't exactly go out of its way to teach you what you can do with it, and the [Advanced Bash Scripting Guide][absg] is not exactly light reading.
 This guide is also not light reading but should provide a practical introduction to most concepts and some example usage, specifically for someone who wants to be a developer and not a script writer.
 
 
-Learning the shell has been a ten-year process for me, and I'm not really an expert. This guide is the stuff I've learned and found useful.  It's definitely not all there is to know about this stuff.
+Learning the shell has been a ten-year process for me, and I'm not really an expert. This guide is the stuff I've learned and found useful. It's definitely not all there is to know about this.
 
 ### What is a shell?
 
@@ -59,7 +58,7 @@ But you make a small typo:
 ```shell
 $ rm -rf / some/path/to/a/file
 ```
-This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX at least will not stop you from doing this. **Be careful what you type**. [Test commands to see what they do](#printing-commands) (for example, with `:p`) before trying them for real.
+This will remove every file that you have access to. If you have administrator rights you can wipe the whole machine, and OSX at least will not stop you from doing this. **Be careful what you type**. [Test commands to see what they do](#printing-commands) (for example, with `:p`) before trying them for real. [Read the documentation](#unix utilities).
 Most of the time the only risk you'll run is having to restore something from source control or backups, but of course that requires you to use those things. And of course the flip side of this is that if you ever do want to do something crazy like type eight characters and wipe the whole machine, you totally can.
 
 Just remember, with great power comes great responsibility. And yes, that's a line worth stealing ☺
@@ -71,7 +70,22 @@ Programming is fundamentally a way to save human labor, and that includes our ow
 #### Bash vs zsh
 
 By default on most systems the shell interpreter is a program called Bash. This is basically due to inertia at this point: if you're a shell script writer and don't know in what sort of environment your code will run in, it's best to target Bash since it's the default on basically all systems.
-You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework [Prezto](prezto). This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
+You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework [Prezto][prezto]. This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
+
+Neat features of zsh:
+
+* Hit tab almost anywhere and zsh will try to do completion (and expansion)
+```shell
+$ git branch <tab>
+```
+Will list both local and remote git branches associated with that repo, as well as recent commits.
+* Command correction for known commands (you typed `rgep`, did you mean `grep`?)
+* Smart completion for file paths
+```shell
+$ mkdir some/long/nested/directory/you/dont/want/to/type
+$ cd s/l/n/d/y/d/w/t/t
+```
+And hit either tab or enter. Zsh will also tab-complete filenames on remote servers, if that's your cuppa. 
 
 > Note to Epicodus Students:
 To start using `zsh`, you can type `zsh` into any terminal.
@@ -82,6 +96,10 @@ I hear [iTerm][iterm] is pretty cool.
 #### Bash Bashing
 
 Bash as a programming language is primitive and ugly as sin, but it will probably run on any Unix-based system without modification. If you really need to be sure of the broadest possible compatibility, there's an even more primitive version of Bash called POSIX, of which you need to know only that it exists and that if you have to worry about what exactly it is you should probably seek another solution.
+
+#### Prezto
+
+Prezto is pretty, fast, easily configurable, and for the most part user friendly. It does neat things like tab-autocompletion for git branches (and almost everything else you can think of), syntax highlighting as you type, and powerful history tools. 
 
 ## Navigation
 
@@ -108,7 +126,7 @@ For a fuller discussion of the configuration files, see [Configuration](#configu
 
 ## Syntax
 
-Bash actually doesn't have a lot of syntax. Pretty much things are commands, strings, or variables.
+Bash the programming language actually doesn't have a lot of syntax. Pretty much things are commands, strings, or variables.
 
 ### Variables
 Variables are declared like so:
@@ -126,8 +144,31 @@ $ echo ${FOO}
 some string
 ```
 
+Variables can be optionally given a [type][bash-types]. Bash supports integers, arrays, and functions.
+
 And you might think, "variables, great! I'm a programmer, I use those all the time!" Well, not in shell scripts you don't, because you're not developing code that way (hopefully).
 Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them. Do set some [environment variables](#environment-variables) though.
+
+The advanced Bash developer sneers when they read this. They know that Bash variables are powerful and sometimes, the best way to approach a problem with structured text. But if that doesn't happen to describe you, your cue to rewrite your script in another language is probably about thirty lines, or the use of more than one variable.
+
+#### How And When To Write A Bash Script
+
+You should dump any series of commands that you plan on typing more than once into a file. Put
+```shell
+#!/bin/bash
+```
+At the top of the file, and then use `chmod +x` to make it executable. 
+```shell
+$ chmod +x ~/.local/bin/new_project.sh
+```
+Then you can run it by simply typing the name of the file.
+```shell
+$ ~/.local/bin/new_project.sh
+```
+If the folder your script is in is in your [$PATH](#$PATH) you can just type `new_project.sh` and it will run like any other program.
+
+Do this for things you were going to end up typing anyway. Epicodus students: script your project creation, or use [this one][new-project-script]. Typing the same thing over and over again is not what programmers do.
+If you're doing anything more clever than that, reach for Ruby or Python or even Javascript. For mac users, Homebrew is an pretty good example of shell scripting in Ruby; check out how it works sometime.
 
 ### Strings
 
@@ -240,7 +281,13 @@ $ rmdir project/font; rm index.html
 rmdir: failed to remove 'project/font': No such file or directory
 rm: remove regular empty file 'index.html'? y
 ```
-As you can see, the `rm index.html` executed even though the previous command had an error.
+As you can see, the `rm index.html` executed even though the previous command had an error. The last thing that you should know about here is the `&` character. So say you want to start a command, but you don't care about the output at all. Your command is:
+```shell
+$ some_command &
+```
+> Note:
+If you're reading this and you have a good usage example, please submit a pull request.
+What this technically does is spawn the new command in what's called a subshell. It will probably be a very long time before you use this, unless you use Linux and have a bad habit of spawning graphical programs from the command line.
 
 ## History
 
@@ -543,7 +590,7 @@ This guide will be updated at some point with more explicit instructions on how 
 
 A full description of git's config options is somewhat out of scope for this guide. Check [here][git-config] for more info.
 
-You will potentially want to add things to your `~/.gitignore` file. On OSX having `.DS_Store` in there is not really optional.
+You will potentially want to add things to your `~/.gitignore` file. On OSX having `.DS_Store` in there is not really optional. GitHub has a collection of [useful .gitignore files][github-gitignore]
 
 ### nano
 
@@ -553,29 +600,9 @@ include /usr/share/nano/*
 ```
 Those will do pretty well. For those using other systems, there's also a GitHub repo with [improved nano highlighting][nanocolor] that you may want to use.
 
-### mysql
+### vim
 
-```shell
-[mysql]
-auto-rehash
-pager = less
-```
-Put that in `~/.my.cnf` and get tab completion for table names and paged output. For a better interactive mysql prompt, use `mycli`.
-
-### atom
-
-TODO: find something useful to put here.
-
-### ruby-related stuff
-
-TODO: find something useful to put here.
-Use `pry` instead of `irb`. [It's much nicer][pry-repl].
-> Epicodeans: pry is available on all the computers already and it's a fun way to explore Ruby. To run it, just type `pry`. Then try `ls 5`.
-> if  for some reason it's not available, it's a simple `gem install pry pry-doc` away.
-
-## Epicodus Startup Scripts
-
-My next task after getting this online is writing a decent startup script. I do recommend forking zprezto in order to make your own modifications to the .zshrc files. I'll update this section as I get things done.
+Someone needs to teach me this so I can write this section.
 
 ## Cheat Sheet
 
@@ -618,3 +645,7 @@ Recommended:
 [mangpage]: https://en.wikipedia.org/wiki/Man_page
 [infosec]: https://en.wikipedia.org/wiki/Information_security
 [iterm]: https://www.iterm2.com/
+[brew]: https://github.com/Homebrew/brew/
+[bash-types]: http://www.tldp.org/LDP/abs/html/declareref.html
+[new-project-script]: https://github.com/tenebrousedge/new_project_script
+[github-gitignore]: https://github.com/github/gitignore
