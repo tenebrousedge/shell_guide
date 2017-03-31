@@ -3,6 +3,53 @@
 version 1.0.2
 ©2017 Patrick 'Kai' Leahy. Licensed [CC0][cc0], but attribution would be polite.
 
+<!-- toc -->
+
+- [Intended Audience](#intended-audience)
+  * [Assumed Knowledge](#assumed-knowledge)
+- [Summary of Content](#summary-of-content)
+- [About the Author](#about-the-author)
+- [Starting Out With the Shell](#starting-out-with-the-shell)
+  * [What is a shell?](#what-is-a-shell)
+  * [Why learn this?](#why-learn-this)
+    + [Bash vs zsh](#bash-vs-zsh)
+    + [Bash Bashing](#bash-bashing)
+    + [Prezto](#prezto)
+- [Navigation](#navigation)
+- [Syntax](#syntax)
+  * [Variables](#variables)
+    + [How And When To Write A Bash Script](#how-and-when-to-write-a-bash-script)
+  * [Strings](#strings)
+- [Redirection](#redirection)
+    + [Other Pipeline Elements](#other-pipeline-elements)
+- [History](#history)
+- [Substitution](#substitution)
+    + [Printing commands](#printing-commands)
+- [Unix Utilities](#unix-utilities)
+  * [less](#less)
+  * [find](#find)
+    + [Silencing Errors](#silencing-errors)
+  * [grep](#grep)
+  * [tail and head](#tail-and-head)
+  * [top and kill](#top-and-kill)
+  * [Editors: vim, emacs, and nano](#editors-vim-emacs-and-nano)
+  * [ssh](#ssh)
+- [Environment Variables](#environment-variables)
+  * [$PATH](#path)
+  * [$CDPATH](#cdpath)
+  * [$USER, $HOME, $PWD, $OLDPWD](#user-home-pwd-oldpwd)
+  * [$EDITOR](#editor)
+- [Configuration](#configuration)
+  * [Dotfiles and *.rc files](#dotfiles-and-rc-files)
+  * [git](#git)
+  * [nano](#nano)
+  * [vim](#vim)
+- [Cheat Sheet](#cheat-sheet)
+- [Problems with this Guide](#problems-with-this-guide)
+- [Further Reading](#further-reading)
+
+<!-- tocstop -->
+
 ## Intended Audience
 
 This guide is specifically written for my classmates at Epicodus. 
@@ -85,7 +132,7 @@ Will list both local and remote git branches associated with that repo, as well 
 $ mkdir some/long/nested/directory/you/dont/want/to/type
 $ cd s/l/n/d/y/d/w/t/t
 ```
-And hit either tab or enter. Zsh will also tab-complete filenames on remote servers, if that's your cuppa. 
+And hit either tab or enter. Zsh will also tab-complete filenames on remote servers, if that's your cuppa. [Here][zsh-is-better] are some other cool zsh features.
 
 > Note to Epicodus Students:
 To start using `zsh`, you can type `zsh` into any terminal.
@@ -99,7 +146,7 @@ Bash as a programming language is primitive and ugly as sin, but it will probabl
 
 #### Prezto
 
-Prezto is pretty, fast, easily configurable, and for the most part user friendly. It does neat things like tab-autocompletion for git branches (and almost everything else you can think of), syntax highlighting as you type, and powerful history tools. 
+Prezto is pretty, fast, easily configurable, and user friendly. It does neat things like tab-autocompletion for git branches (and almost everything else you can think of), syntax highlighting as you type, and powerful history tools. I can't really praise it enough, and it's really hard to show you why in plain text, so just use it already ☺
 
 ## Navigation
 
@@ -108,7 +155,7 @@ The way these are typically written is with a caret (^) substituting for the Con
 
 The first one you should know is `^C` (ctrl+C). This stops whatever command is currently executing, unless you've locked the system up. If that happens you can probably still use the `kill` command, but you may also contemplate the failures in life that have brought you that point, your worth as a human being, and the fate of your homework assignment before hitting that panic button.
 
-Usually holding CTRL/CMD and pressing right or left will scroll by word instead of by character. Here are a few more commands
+Usually holding CTRL/CMD and pressing right or left will scroll by word instead of by character. Here are a few more commands:
 
 * `^D` : this technically means 'end of file' but you use it to get out of things. If you're using zsh but bash is your default shell, pressing this will get you out of zsh and back to bash. This is also what you use to close SSH connections.
 * `^A` : jumps to the beginning of the line. You use this when you forget something at the beginning of a command
@@ -339,7 +386,7 @@ $ cd !$
 ```
 
 I use that one many times per day.
-There are other complicated things you can do if you want, e.g. the third and fifth arguments, or a range of arguments, but generally if I need something like that I'll just hit up and use the ctrl+arrow_key (which goes backwards by word instead of by character) and just make whatever changes on that line.
+There are other complicated things you can do if you want, e.g. the third and fifth arguments, or a range of arguments, but generally if I need something like that I'll just hit up and use the ctrl+arrow_key (which if you'll recall goes backwards by word instead of by character) and just make whatever changes on that line. The command `fc` is also used to fix commands, but not by me.
 
 ## Substitution
 
@@ -375,7 +422,7 @@ $ touch spam spamspam spamspamspam spameggsausageandspam
 $ !!:gs/spam/meow/:p
 touch meow meowmeow meowmeowmeow meoweggsausageandmeow
 ```
-`gs` here stands for 'global substitution', and the :p bit at the end of the history command prints it instead of executing it.
+`gs` here stands for 'global substitution', and the `:p` bit at the end of the history command prints it instead of executing it.
 
 #### Printing commands
 
@@ -649,3 +696,4 @@ Recommended:
 [bash-types]: http://www.tldp.org/LDP/abs/html/declareref.html
 [new-project-script]: https://github.com/tenebrousedge/new_project_script
 [github-gitignore]: https://github.com/github/gitignore
+[zsh-is-better]: https://www.slideshare.net/jaguardesignstudio/why-zsh-is-cooler-than-your-shell-16194692
