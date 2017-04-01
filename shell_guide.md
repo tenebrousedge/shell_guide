@@ -556,7 +556,7 @@ You can also use `ssh` to set up proxies and tunnels, but you probably won't. Do
 
 ### Further Reading
 
-There are other important 
+There are dozens or hundreds of other shell commands which you might find useful, especially in pipelines. You may want to look into the [Posix toolset][posix], or find out what [Awesome][awesome-shell] stuff you can do with the shell.
 
 ## Environment Variables
 
@@ -670,7 +670,8 @@ I use zsh on Linux, so I expect there to be some differences with e.g. keyboard 
 * [Zsh Documentation](http://zsh.sourceforge.net/Doc/)
 * [History of Character Encodings](http://tronweb.super-nova.co.jp/characcodehist.html)
 * [Why Ctrl-D exits the shell](http://unix.stackexchange.com/questions/110240/why-does-ctrl-d-eof-exit-the-shell)
-
+* [Unix Hater's Handbook](http://web.mit.edu/~simsong/www/ugh.pdf) (rather dated by now)
+* [The Shell Hater's Handbook](http://shellhaters.org/) [video](http://confreaks.tv/videos/gogaruco2010-the-shell-hater-s-handbook)
 Recommended:
 
 * [Slashdot](https://slashdot.org)
@@ -702,3 +703,6 @@ Recommended:
 [new-project-script]: https://github.com/tenebrousedge/new_project_script
 [github-gitignore]: https://github.com/github/gitignore
 [zsh-is-better]: https://www.slideshare.net/jaguardesignstudio/why-zsh-is-cooler-than-your-shell-16194692
+[posix]: http://shellhaters.org/
+[bash-one-liners]: http://www.bashoneliners.com/
+[awesome-shell]: https://github.com/alebcay/awesome-shell
