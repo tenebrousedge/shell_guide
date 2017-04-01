@@ -1,6 +1,6 @@
 # What Kai Thinks Every Developer Should Know About The Shell
 
-version 1.0.2
+version 1.0.3
 ©2017 Patrick 'Kai' Leahy. Licensed [CC0][cc0], but attribution would be polite.
 
 <!-- toc -->
