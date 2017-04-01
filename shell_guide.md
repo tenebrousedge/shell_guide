@@ -1,4 +1,4 @@
-# A Brief Introduction to the Shell
+# What Kai Thinks Every Developer Should Know About The Shell
 
 version 1.0.2
 ©2017 Patrick 'Kai' Leahy. Licensed [CC0][cc0], but attribution would be polite.
@@ -431,13 +431,14 @@ If you have typed out something and you're not sure what it might expand to, use
 
 ## Unix Utilities
 
+The unix toolbox, comprising the shell and utilities, is ludicrously powerful, which probably has something to do with why you can get them on every major computing platform including (finally) Windows.
+*I do not have a good handle on sed or awk. If someone wants to contribute a short description of the use of those tools, please submit a pull request.*
+*Note for anyone else: the reason why I don't have a good handle on these is that they're complex and not usually necessary*
+
+#### Finding help
 Almost all of the command line tools have a manual, unless it's something built in to the shell like `echo`. Type in (e.g.) `man find` and you will be inundated with information.
 If you're using something like `bower` which does not ship with a [manpage][manpage], you should be able to get a quick usage guide by passing it the `--help` flag.
 If the tool is extremely badly behaved and does not respond to the `--help` flag, you can try `-h`. If none of that works throw away the tool and complain to the author.
-
-The unix toolbox, comprising the shell and utilities, is ludicrously powerful, which probably has something to do with why you can get them on every major computing platform including (finally) Windows.
-*I do not have a good handle on sed or awk. If someone wants to contribute a short description of the use of those tools, please submit a pull request.*
-*Note for anyone else: the reason why I don't have a good handle on these is that they're complex and not usually necessary* 
 
 It should probably be mentioned that these tools were all written by different people and the flags and invocation tend to be somewhat idiosyncratic. `dd` is probably the best example of this. It's a tool you use to copy binary data in very specific ways, but its syntax is like no other utility, because it was written for some obscure IBM system, and there's no point in changing the syntax of a tool that is in wide use already.
 
@@ -552,6 +553,10 @@ You can also use `ssh` to set up proxies and tunnels, but you probably won't. Do
 +Never create a private key without a passphrase.
 +Never re-use a key: create one for each site that you want to access, for each machine you access that site with.
 `ssh-agent` will let you get away with only typing the passphrase for your keys once per session.
+
+### Further Reading
+
+There are other important 
 
 ## Environment Variables
 
