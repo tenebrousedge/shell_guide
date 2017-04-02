@@ -1,54 +1,12 @@
-# What Kai Thinks Every Developer Should Know About The Shell
+---
+toc_levels: 1,2
+---
 
 version 1.0.3
 ©2017 Patrick 'Kai' Leahy. Licensed [CC0][cc0], but attribution would be polite.
 
-<!-- toc -->
-
-- [Intended Audience](#intended-audience)
-  * [Assumed Knowledge](#assumed-knowledge)
-- [Summary of Content](#summary-of-content)
-- [About the Author](#about-the-author)
-- [Starting Out With the Shell](#starting-out-with-the-shell)
-  * [What is a shell?](#what-is-a-shell)
-  * [Why learn this?](#why-learn-this)
-    + [Bash vs zsh](#bash-vs-zsh)
-    + [Bash Bashing](#bash-bashing)
-    + [Prezto](#prezto)
-- [Navigation](#navigation)
-- [Syntax](#syntax)
-  * [Variables](#variables)
-    + [How And When To Write A Bash Script](#how-and-when-to-write-a-bash-script)
-  * [Strings](#strings)
-- [Redirection](#redirection)
-    + [Other Pipeline Elements](#other-pipeline-elements)
-- [History](#history)
-- [Substitution](#substitution)
-    + [Printing commands](#printing-commands)
-- [Unix Utilities](#unix-utilities)
-  * [less](#less)
-  * [find](#find)
-    + [Silencing Errors](#silencing-errors)
-  * [grep](#grep)
-  * [tail and head](#tail-and-head)
-  * [top and kill](#top-and-kill)
-  * [Editors: vim, emacs, and nano](#editors-vim-emacs-and-nano)
-  * [ssh](#ssh)
-- [Environment Variables](#environment-variables)
-  * [$PATH](#path)
-  * [$CDPATH](#cdpath)
-  * [$USER, $HOME, $PWD, $OLDPWD](#user-home-pwd-oldpwd)
-  * [$EDITOR](#editor)
-- [Configuration](#configuration)
-  * [Dotfiles and *.rc files](#dotfiles-and-rc-files)
-  * [git](#git)
-  * [nano](#nano)
-  * [vim](#vim)
-- [Cheat Sheet](#cheat-sheet)
-- [Problems with this Guide](#problems-with-this-guide)
-- [Further Reading](#further-reading)
-
-<!-- tocstop -->
+* Table of Contents
+{:toc}
 
 ## Intended Audience
 
@@ -114,7 +72,11 @@ Just remember, with great power comes great responsibility. And yes, that's a li
 
 Programming is fundamentally a way to save human labor, and that includes our own labor. Learning to use the shell effectively will save you labor as a programmer, and the returns on that investment are exponential. The more time you can spend **thinking** instead of **typing**, the more you can express in code, and the more you can express in code, the more you can change the world.
 
-#### Bash vs zsh
+### Bash Bashing
+
+Bash as a programming language is primitive and ugly as sin, but it will probably run on any Unix-based system without modification. If you really need to be sure of the broadest possible compatibility, there's an even more primitive version of Bash called POSIX, of which you need to know only that it exists. If you have to worry about whether your scripts are compliant with Bash, POSIX, or something else, you should probably try and use some other tool.
+
+### Bash vs zsh
 
 By default on most systems the shell interpreter is a program called Bash. This is basically due to inertia at this point: if you're a shell script writer and don't know in what sort of environment your code will run in, it's best to target Bash since it's the default on basically all systems.
 You as a developer should probably use something that sucks somewhat less. My recommendation is to use zsh in combination with the excellent framework [Prezto][prezto]. This guide will note differences between the two where appropriate, but my advice is to just learn zsh.
@@ -140,11 +102,7 @@ To start using `zsh`, you can type `zsh` into any terminal.
 > Note to Mac users:
 I hear [iTerm][iterm] is pretty cool.
 
-#### Bash Bashing
-
-Bash as a programming language is primitive and ugly as sin, but it will probably run on any Unix-based system without modification. If you really need to be sure of the broadest possible compatibility, there's an even more primitive version of Bash called POSIX, of which you need to know only that it exists and that if you have to worry about what exactly it is you should probably seek another solution.
-
-#### Prezto
+### Prezto
 
 Prezto is pretty, fast, easily configurable, and user friendly. It does neat things like tab-autocompletion for git branches (and almost everything else you can think of), syntax highlighting as you type, and powerful history tools. I can't really praise it enough, and it's really hard to show you why in plain text, so just use it already ☺
 
@@ -175,6 +133,25 @@ For a fuller discussion of the configuration files, see [Configuration](#configu
 
 Bash the programming language actually doesn't have a lot of syntax. Pretty much things are commands, strings, or variables.
 
+### How And When To Write A Bash Script
+
+You should dump any series of commands that you plan on typing more than once into a file. Put
+```shell
+#!/bin/bash
+```
+At the top of the file, and then use `chmod +x` to make it executable. 
+```shell
+$ chmod +x ~/.local/bin/new_project.sh
+```
+Then you can run it by simply typing the name of the file.
+```shell
+$ ~/.local/bin/new_project.sh
+```
+If the folder your script is in is in your [$PATH](#$PATH) you can just type `new_project.sh` and it will run like any other program.
+
+Do this for things you were going to end up typing anyway. Epicodus students: script your project creation, or use [this one][new-project-script]. Typing the same thing over and over again is not what programmers do.
+If you're doing anything more clever than that, reach for Ruby or Python or even Javascript. For mac users, Homebrew is an pretty good example of shell scripting in Ruby; check out how it works sometime.
+
 ### Variables
 Variables are declared like so:
 ```shell
@@ -197,25 +174,6 @@ And you might think, "variables, great! I'm a programmer, I use those all the ti
 Variables are mentioned here for completeness and so you know what they look like. Try to avoid needing to use them. Do set some [environment variables](#environment-variables) though.
 
 The advanced Bash developer sneers when they read this. They know that Bash variables are powerful and sometimes, the best way to approach a problem with structured text. But if that doesn't happen to describe you, your cue to rewrite your script in another language is probably about thirty lines, or the use of more than one variable.
-
-#### How And When To Write A Bash Script
-
-You should dump any series of commands that you plan on typing more than once into a file. Put
-```shell
-#!/bin/bash
-```
-At the top of the file, and then use `chmod +x` to make it executable. 
-```shell
-$ chmod +x ~/.local/bin/new_project.sh
-```
-Then you can run it by simply typing the name of the file.
-```shell
-$ ~/.local/bin/new_project.sh
-```
-If the folder your script is in is in your [$PATH](#$PATH) you can just type `new_project.sh` and it will run like any other program.
-
-Do this for things you were going to end up typing anyway. Epicodus students: script your project creation, or use [this one][new-project-script]. Typing the same thing over and over again is not what programmers do.
-If you're doing anything more clever than that, reach for Ruby or Python or even Javascript. For mac users, Homebrew is an pretty good example of shell scripting in Ruby; check out how it works sometime.
 
 ### Strings
 
@@ -279,12 +237,16 @@ The perspicacious programmer will notice that the other examples used echo, and 
 
 ## Redirection
 
+### Pipes
+
 This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities](#unix-utilities) section, but here's a quick example that I use all the time:
 ```shell
 $ du -h ~ | sort -hr | head -n 20
 ```
 The first part of the command (`du -h ~`) lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results.
- More succinctly, the command gives the top twenty largest files or directories. Pretty neat, huh?
+More succinctly, the command gives the top twenty largest files or directories. Pretty neat, huh?
+
+### I/O Redirection
 
 Each program that executes in the shell has an input stream, an output stream, and an error output stream, referred to as standard input (`stdin`), standard output (`stdout`), and standard error (`stderr`). There are cases where you care about this, which will be covered later. However, there are some interesting things you can do with file I/O redirection.
 
@@ -316,7 +278,7 @@ $ grep 'class="red' < search_results.txt
 
 You will probably use the pipe character daily, and everything else is more situational.
 
-#### Other Pipeline Elements
+### Other Pipeline Elements
 
 So you want to run a bunch of commands on the same line, but you don't want to actually chain their output. You do that like this:
 ```shell
@@ -335,6 +297,12 @@ $ some_command &
 > Note:
 If you're reading this and you have a good usage example, please submit a pull request.
 What this technically does is spawn the new command in what's called a subshell. It will probably be a very long time before you use this, unless you use Linux and have a bad habit of spawning graphical programs from the command line.
+
+### Silencing Errors
+
+This deserves its own little subheader. The idea is that otherwise those errors are going to be passed as input to some other function that's probably expecting only a list of file names. `/dev/null` is a special file that discards all input to it, and the `2>` refers to the error stream.
+There is also a `/dev/zero`, `/dev/random`, and `/dev/urandom`, and these spit out zeros or random numbers until you tell them to stop.
+Mostly you need to know that these exist, and that you can do more complicated things with redirecting error and input streams if you really need to.
 
 ## History
 
@@ -390,6 +358,8 @@ There are other complicated things you can do if you want, e.g. the third and fi
 
 ## Substitution
 
+### Curly Brace Substitution
+
 Technically using something like `!$` is command substitution, but there a couple of things which deserve their own heading. The first is curly brace substitution, which is extremely useful.
 ```shell
 $ mkdir -p projectname/{img,css,js,font} && touch projectname/{css/styles.css,js/scripts.js,index.html}
@@ -407,6 +377,8 @@ $ ln -s /etc/nginx/sites-{available,enabled}/website.local
 The first command renames the file `config` to `config.backup`.
 The second command makes a folder structure (the `-p` flag creates parent directories as needed) and creates some files inside it.
 The third command is what you would use to enable an nginx website. `ln -s` creates a **symlink**, which is just a pointer to a file.
+
+### Caret Substitution
 Another really useful thing is caret substitution, which just swaps one string for another in the previous command.
 ```shell
 $ ls some_file
@@ -416,6 +388,8 @@ rm: remove regular empty file 'some_file'? y
 ```
 Here we have swapped `ls` with `rm` -- the idea being to verify that the file exists, and then to remove it.
 
+### Global Substitution
+
 If you need to replace a string that occurs multiple times in the previous command you can do this:
 ```shell
 $ touch spam spamspam spamspamspam spameggsausageandspam
@@ -424,7 +398,7 @@ touch meow meowmeow meowmeowmeow meoweggsausageandmeow
 ```
 `gs` here stands for 'global substitution', and the `:p` bit at the end of the history command prints it instead of executing it.
 
-#### Printing commands
+### Printing commands
 
 The `:p` trick doesn't work for everything. As far as I know it only really works for history expansion.
 If you have typed out something and you're not sure what it might expand to, use `echo [the rest of the command]`.
@@ -435,7 +409,7 @@ The unix toolbox, comprising the shell and utilities, is ludicrously powerful, w
 *I do not have a good handle on sed or awk. If someone wants to contribute a short description of the use of those tools, please submit a pull request.*
 *Note for anyone else: the reason why I don't have a good handle on these is that they're complex and not usually necessary*
 
-#### Finding help
+### Finding help
 Almost all of the command line tools have a manual, unless it's something built in to the shell like `echo`. Type in (e.g.) `man find` and you will be inundated with information.
 If you're using something like `bower` which does not ship with a [manpage][manpage], you should be able to get a quick usage guide by passing it the `--help` flag.
 If the tool is extremely badly behaved and does not respond to the `--help` flag, you can try `-h`. If none of that works throw away the tool and complain to the author.
@@ -480,12 +454,6 @@ Normally `find` is just used to list some files, but it also has an `-exec` opti
 find . -type f -name "*.php" 2>/dev/null -exec php -l {} \; | grep -v 'No syntax errors'
 ```
 This does a syntax check on all PHP files and prints the ones that don't pass. Inheriting a repository where the above command is necessary is not fun, by the way. I don't particularly remember why the `2>/dev/null` part was necessary, but for the record that's how you get rid of error streams you don't want. 
-
-#### Silencing Errors
-
-This deserves its own little subheader. The idea is that otherwise those errors are going to be passed as input to some other function that's probably expecting only a list of file names. `/dev/null` is a special file that discards all input to it, and the `2>` refers to the error stream.
-There is also a `/dev/zero`, `/dev/random`, and `/dev/urandom`, and these spit out zeros or random numbers until you tell them to stop.
-Mostly you need to know that these exist, and that you can do more complicated things with redirecting error and input streams if you really need to.
 
 ### grep
 

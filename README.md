@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # What Kai Thinks Every Developer Should Know About The Shell
 version 1.0.3
 

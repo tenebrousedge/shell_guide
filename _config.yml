@@ -1,1 +1,4 @@
 theme: jekyll-theme-slate
+markdown: kramdown
+title: What Kai Thinks Every Developer Should Know About The Shell
+description: an opinionated guide to basic shell usage
