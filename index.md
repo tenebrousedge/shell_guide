@@ -413,6 +413,7 @@ If there is some command that you type often, you can save yourself some time by
 ```shell
 $ alias gpo='git push origin HEAD'
 ```
+
 In the example above typing `gpo` would execute `git push origin HEAD`. Spaces aren't allowed after the equals sign. This alias will only persist until you close the window. If you want to make that a permanent alias, you have to put that line in your `~/.bashrc` or `~/.zhsrc` file.
 
 Don't go hog-wild with aliases, or at least if you do, remember the commands that they're replacing, so that you don't get confused when sitting down to a new machine. Prezto and other frameworks include various helpful sets of aliases for git commands, ruby tasks, and many other common tools.
