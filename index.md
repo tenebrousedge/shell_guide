@@ -15,6 +15,7 @@ This guide is specifically written for my classmates at Epicodus.
 ### Assumed Knowledge
 
 [This page, essentially][epicodus-shell]. You should know what cd, ls, touch, mkdir, mv and rm do. Also, this guide uses
+
 ```shell
 $
 ```
@@ -33,7 +34,9 @@ This guide will also omit a full description of regular expressions.
 
 ## About the Author
 
-Hi, I'm Kai. I'm originally from rural Alaska, I've bounced around the States and spent four years or so in Central America. I really wanted to stay down there and so I talked my way into a programming job and taught myself what I needed to know as I went. That worked out more or less okay but in the six years since then I've been mostly stuck working on horrible legacy PHP projects, and Central America didn't turn out to be a good way to meet business contacts. Other than that I've used Linux exclusively for about ten years now, and messed around with Ruby to the tune of reading six or seven books and playing with rails and pry. I am currently attending Epicodus.
+Hi, I'm Kai. I grew up in rural Alaska, and I grew up with the Internet. After getting dial-up in 1994 at age 8, the Internet was basically my only link to the outside world. Alaska was awful for me in all sorts of ways. After several attempts I managed to escape its icy clutches, and I found myself half a hemisphere away in Central America. I really wanted to stay down there and so I talked my way into a programming job and taught myself what I needed to know as I went. That worked out more or less okay but in the six years since then I've been mostly stuck working on horrible legacy PHP projects, and Central America didn't turn out to be a good way to meet business contacts. So now I'm putting down some roots in Portland, and loving it so far :)
+
+ I've used Linux exclusively for about ten years now, and have picked up a thing or two, especially since starting work as a programmer. I am currently attending Epicodus to develop my Javascript and Ruby skills.
 
 ## Starting Out With the Shell
 
@@ -402,6 +405,12 @@ touch meow meowmeow meowmeowmeow meoweggsausageandmeow
 
 The `:p` trick doesn't work for everything. As far as I know it only really works for history expansion.
 If you have typed out something and you're not sure what it might expand to, use `echo [the rest of the command]`.
+
+### Aliases
+
+If there is some command that you type often, you can save yourself some time by using an alias.
+```shell
+
 
 ## Unix Utilities
 

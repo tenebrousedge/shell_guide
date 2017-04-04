@@ -14,20 +14,16 @@
   background-color: white;
   border-radius: 1em;
   margin: 1em 0;
-  min-width: 14em;
+  width: 14%;
 }
 
 #markdown-toc:hover > li > a:after { margin-left: 5px; content: '\25BC'; }
 #markdown-toc li > a:only-child:after { margin-left: 0; content: ''; }
 
-@media screen and (max-width: 1110px) {
-  #markdown-toc {
-    display:none;
-  }
-}
-
 @media screen and (max-width: 1280px) {
   ul#markdown-toc {
-    line-height: 1.2em;
+  	position:relative;
+  	left: 0;
+  	top: 0;
   }
 }
