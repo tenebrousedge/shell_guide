@@ -14,7 +14,7 @@
   background-color: white;
   border-radius: 1em;
   margin: 1em 0;
-  width: 14%;
+  width: 20%;
 }
 
 #markdown-toc:hover > li > a:after { margin-left: 5px; content: '\25BC'; }
@@ -25,5 +25,6 @@
   	position:relative;
   	left: 0;
   	top: 0;
+    width: 100%
   }
 }
