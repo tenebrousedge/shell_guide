@@ -244,7 +244,7 @@ The perspicacious programmer will notice that the other examples used echo, and 
 
 This guy is called a pipe: `|`. It lets you chain commands together in very powerful ways. Its invention was actually a major milestone in computing (to be fair, 1973 was a far simpler time). We will get more into how you will use this in the [Unix Utilities](#unix-utilities) section, but here's a quick example that I use all the time:
 ```shell
-$ du -h ~ | sort -hr | head -n 20
+$ du -ha ~ | sort -hr | head -n 20
 ```
 The first part of the command (`du -h ~`) lists all of the files in the home directory and their size in a human-readable format (megabytes and gigabytes, rather than just bytes), then passes that to `sort`, which does what it says on the tin, and then passes the sorted list to `head`, which gives the top twenty results.
 More succinctly, the command gives the top twenty largest files or directories. Pretty neat, huh?
