@@ -279,7 +279,12 @@ The final bit of redirection that you can do is to take a file and slurp up the 
 $ grep 'class="red' < search_results.txt
 ```
 
-You will probably use the pipe character daily, and everything else is more situational.
+You will probably use the pipe character daily, and everything else is more situational. The really-final bit of redirection I have never really found a use for, but if you ever need to pretend for a hot minute that the output of a command is a file, you can do:
+
+```shell
+$ diff <(ls $first_directory) <(ls $second_directory)
+```
+The example given would let you compare the contents of two different directories.
 
 ### Other Pipeline Elements
 
@@ -562,7 +567,7 @@ On the other hand, you can drop your scripts into any folder listed in your `$PA
 
 ### $CDPATH
 
-This is not a critical part of how your shell works, but it's still super useful. If you have all your project folders in a particular place (~/Desktop, e.g.) you can set your $CDPATH to that folder and then cd to any subdirectory without worrying about where you are.
+This is not a critical part of how your shell works, but it's still super useful. If you have all your project folders in a particular place (`~/Desktop`, e.g.) you can set your $CDPATH to that folder and then cd to any subdirectory without worrying about where you are.
 ```shell
 $ CDPATH=~/Desktop/
 $ ls ~/Desktop/
@@ -581,6 +586,12 @@ These are set by the shell automatically and they can be kinda useful.
 * $PWD : This is the current working directory
 * $OLDPWD : This is the previous working directory
 
+Typing `cd -` will take you to the directory specified by `$OLDPWD`. This is useful for when you want to execute a command in some folder but still keep working where you're currently at.
+
+```shell
+$ cd ~/Documents/shell_guide && git add -u && git commit -m "adding one character to improve an example" && git push origin HEAD && cd -
+```
+
 ### $EDITOR
 
 This is used by various command-line tools, including git. If you want to edit your commit messages with atom, you can set
@@ -591,7 +602,7 @@ or in your `~/.bashrc` or `~/.zshrc` file
 ```shell
 export EDITOR='atom'
 ```
-On my system this is set to `nano` because it's pretty rare that this gets invoked on something where you want to have a more fully featured editor.
+On my system this is set to `nano` because it's pretty rare that this gets invoked on something where you want to have a more fully featured editor. More advanced users will set it to `vim`.
 
 ## Configuration
 
